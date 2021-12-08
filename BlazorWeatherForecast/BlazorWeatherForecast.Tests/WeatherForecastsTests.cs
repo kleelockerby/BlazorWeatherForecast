@@ -60,6 +60,32 @@ namespace BlazorWeatherForecast.Tests
             actualForecastDetailElement.MarkupMatches(expectedForecastDetail);
         }
 
+        [Fact]
+        public void CounterAdd()
+        {
+            TestContext ctx = new TestContext();
+            IRenderedComponent<Counter> cut = ctx.RenderComponent<Counter>();
+
+            string countValue = GetCountValue(cut);
+            Assert.Equal("Current count: 0", countValue);
+
+            cut.Find("button#btnInc").Click();
+            countValue = GetCountValue(cut);
+
+            Assert.Contains("Current count: 1", countValue);
+
+            cut.Find("button#btnDec").Click();
+            countValue = GetCountValue(cut);
+            Assert.Equal("Current count: 0", countValue);
+        }
+
+        private string GetCountValue(IRenderedComponent<Counter> comp)
+        {
+            IElement element = comp.Find("#count");
+            string countValue = element.GetInnerText();
+            return countValue;
+        }
+
         private IEnumerable<WeatherForecast> GetWeather()
         {
             using (StreamReader r = new StreamReader(@"C:\SourceFiles\weatherForecast.json"))

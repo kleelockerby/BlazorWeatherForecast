@@ -31,16 +31,6 @@ namespace BlazorWeatherForecast.Client
             builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
             CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
             CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
-            
-            //var host = builder.Build();
-            //var jsInterop = host.Services.GetRequiredService<IJSRuntime>();
-            //var result = await jsInterop.InvokeAsync<string>("cultureInfo.get");
-            //if (result != null)
-            //{
-            //    var culture = new CultureInfo(result);
-            //    CultureInfo.DefaultThreadCurrentCulture = culture;
-            //    CultureInfo.DefaultThreadCurrentUICulture = culture;
-            //}
 
             await builder.Build().RunAsync();
         }
