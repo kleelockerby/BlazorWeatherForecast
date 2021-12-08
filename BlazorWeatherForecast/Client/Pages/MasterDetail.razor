@@ -1,0 +1,23 @@
+﻿@page "/master-detail"
+@inject IWeatherForecastService ForecastService
+
+<h3>MasterDetail</h3>
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <ForecastDataGrid Forecasts="@this.forecasts"></ForecastDataGrid>
+}
+
+@code {
+    private IEnumerable<WeatherForecast> forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastsAsync();
+    }
+}

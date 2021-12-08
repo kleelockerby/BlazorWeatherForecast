@@ -1,0 +1,31 @@
+﻿@using Syncfusion.Blazor.Grids
+
+<SfGrid DataSource="@Forecasts" Locale="en">
+    <GridColumns>
+        <GridColumn Field="@nameof(WeatherForecast.Date)" HeaderText="Date" TextAlign="TextAlign.Right" Width="180"></GridColumn>
+        <GridColumn Field="@nameof(WeatherForecast.TemperatureC)" HeaderText="Temp C" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+        <GridColumn Field="@nameof(WeatherForecast.Summary)" HeaderText="Summary" TextAlign="TextAlign.Right" Width="260"></GridColumn>
+        <GridColumn Field="@nameof(WeatherForecast.TemperatureF)" HeaderText="Temp F" TextAlign="TextAlign.Right" Width="150"></GridColumn>
+    </GridColumns>
+    <GridTemplates>
+        <DetailTemplate>
+            @{
+                WeatherForecast weatherForecast = (context as WeatherForecast);
+               <WeatherForecastDetail WeatherForecast="@weatherForecast"></WeatherForecastDetail>
+            }
+        </DetailTemplate>
+    </GridTemplates>
+</SfGrid>
+
+@code {
+
+    private IEnumerable<WeatherForecast> _forecasts = Array.Empty<WeatherForecast>();
+
+    [Parameter]
+    public IEnumerable<WeatherForecast> Forecasts
+    {
+        get => _forecasts;
+        set => _forecasts = value ?? Array.Empty<WeatherForecast>();
+    }
+
+}
