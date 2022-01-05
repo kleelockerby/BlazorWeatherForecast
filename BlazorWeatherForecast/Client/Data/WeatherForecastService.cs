@@ -3,25 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BlazorWeatherForecast.Shared;
+using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace BlazorWeatherForecast.Client
 {
     public class WeatherForecastService : IWeatherForecastService
     {
-        private static readonly string[] Summaries = new[]
+        private readonly HttpClient _httpClient;
+
+        public WeatherForecastService(HttpClient httpClient)
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+            this._httpClient = httpClient;
+        }
 
         public Task<IEnumerable<WeatherForecast>> GetForecastsAsync()
         {
-            var rng = new Random();
-            return Task.FromResult(Enumerable.Range(3, 7).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            }));
+            return _httpClient.GetFromJsonAsync<IEnumerable<WeatherForecast>>("data/weatherForecast.json");
         }
     }
 }
